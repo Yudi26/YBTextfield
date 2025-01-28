@@ -14,7 +14,7 @@ struct YBTextfield: View {
     
     // Client reuqired properties
     @State var isFloatingLabelNeeded: Bool
-    @State var enteredText: String
+    @Binding var enteredText: String
     @State var placeholder: String
     @State var errorMessage: String
     @State var height: CGFloat = 100
@@ -120,10 +120,10 @@ struct YBTextfield: View {
     }
 }
 
-#Preview {
-    // Tag the dynamic property with `Previewable`.
-    @Previewable @State var enteredText = ""
-    @FocusState var isFocused: Bool
-    // Pass it into your view.
-    YBTextfield(isFloatingLabelNeeded: true, enteredText: "", placeholder: "Enter price", errorMessage: "", focusedField: _isFocused)
-}
+//#Preview {
+//    // Tag the dynamic property with `Previewable`.
+//    @Previewable @State var enteredText = ""
+//    @FocusState var isFocused: Bool
+//    // Pass it into your view.
+//    YBTextfield(isFloatingLabelNeeded: true, enteredText: "", placeholder: "Enter price", errorMessage: "", focusedField: _isFocused)
+//}

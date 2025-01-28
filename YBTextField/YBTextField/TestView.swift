@@ -12,29 +12,32 @@ struct TestView: View {
     @FocusState private var isFocused1
     @FocusState private var isFocused2
     @FocusState private var isFocused3
+    @State private var firstName = ""
+    @State private var lastName = ""
+    @State private var age = ""
     
     var body: some View {
         VStack {
             YBTextfield(
                 isFloatingLabelNeeded: true,
-                enteredText: "",
+                enteredText: $firstName,
                 placeholder: "Enter Name",
                 errorMessage: "",
                 focusedField: _isFocused1
             )
             YBTextfield(
-                isFloatingLabelNeeded: false,
-                enteredText: "",
-                placeholder: "Enter SurName",
+                isFloatingLabelNeeded: true,
+                enteredText: $lastName,
+                placeholder: "Enter Last Name",
                 errorMessage: "",
                 focusedField: _isFocused2
             )
             YBTextfield(isFloatingLabelNeeded: true,
-                        enteredText: "I am SDE",
-                        placeholder: "aaa",
+                        enteredText: $age,
+                        placeholder: "Enter Age",
                         errorMessage: "",
                         focusedField: _isFocused3
-            )
+            ).keyboardType(.numberPad)
         }
     }
 }
