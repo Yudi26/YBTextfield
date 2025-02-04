@@ -14,11 +14,16 @@ struct YBTextfield: View {
     
     // Client reuqired properties
     @State var isFloatingLabelNeeded: Bool
-    @Binding var enteredText: String
+    @State var enteredText: String
     @State var placeholder: String
     @State var errorMessage: String
-    @State var height: CGFloat = 100
+    
+    @State var height: CGFloat = 50
+    
     @FocusState var focusedField
+    
+    var fontName: String = "Avenir Medium"
+    var fontSize: CGFloat = 16
     
     var getColor: Color {
         if isError {
@@ -56,13 +61,14 @@ struct YBTextfield: View {
                             VStack {
                                 TextField("", text: $enteredText)
                                     .focused($focusedField)
-                                    .font(.title)
+                                    .font(Font(UIFont(name: fontName, size: 20) ?? UIFont.systemFont(ofSize: 18)))
                                     .onChange(of: enteredText) { enteredText in
                                         print("Entered Text: \(enteredText)")
                                         self.didTextfieldChanged(text: enteredText)
                                     }
                             }
                             .padding(20)
+                            .frame(height: height)
                             .background(.white)
                         }
                         .padding(5)
@@ -78,24 +84,21 @@ struct YBTextfield: View {
                     }
                     .padding(10)
                 }
-                .frame(height: height)
+                //                .frame(height: height)
                 // Floating View // Placeholder
                 if !isPlaceholderHidden {
                     VStack {
                         Text(placeholder)
+                        //                            .font(.title)
+                            .font(Font(UIFont(name: fontName, size: 20) ?? UIFont.systemFont(ofSize: 18)))
                             .lineLimit(0)
-                            .font(.title2)
+                        
                     }
                     .foregroundColor(getColor)
                     .padding(5)
                     .background(.white)
                     .padding(.leading, 34)
-                    .modifier(FloatingPlaceholderAnimation(isFloatingLabelEnabled: $isFloatingLabelEnabled, isFloatingLabelNeeded: $isFloatingLabelNeeded, placeholder: $placeholder, enteredText: $enteredText, isFocused: $focusedField))
-                    
-                    //                    .onTapGesture {
-                    //                        focusedField = true
-                    //                        isFloatingLabelEnabled = true
-                    //                    }
+                    .modifier(FloatingPlaceholderAnimation(isFloatingLabelEnabled: $isFloatingLabelEnabled, isFloatingLabelNeeded: $isFloatingLabelNeeded, placeholder: $placeholder, enteredText: $enteredText, textFieldHeight: $height, isFocused: $focusedField))
                 }
             }
             .onAppear {
@@ -120,10 +123,10 @@ struct YBTextfield: View {
     }
 }
 
-//#Preview {
-//    // Tag the dynamic property with `Previewable`.
-//    @Previewable @State var enteredText = ""
-//    @FocusState var isFocused: Bool
-//    // Pass it into your view.
-//    YBTextfield(isFloatingLabelNeeded: true, enteredText: "", placeholder: "Enter price", errorMessage: "", focusedField: _isFocused)
-//}
+#Preview {
+    // Tag the dynamic property with `Previewable`.
+    @Previewable @State var enteredText = ""
+    @FocusState var isFocused: Bool
+    // Pass it into your view.
+    YBTextfield(isFloatingLabelNeeded: true, enteredText: "", placeholder: "Enter price", errorMessage: "", focusedField: _isFocused)
+}
